@@ -2,25 +2,22 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductCatalog.Domain.Common;
+using ProductCatalog.Domain.Product;
 using Wolverine;
 
 namespace ProductCatalog.Infrastructure.Persistence;
 
-public class ProductCatalogDbContext : DbContext
+public class ProductCatalogDbContext(
+    DbContextOptions<ProductCatalogDbContext> options,
+    IMessageBus sender,
+    ILogger<ProductCatalogDbContext> logger)
+    : DbContext(options)
 {
-    private readonly ILogger<ProductCatalogDbContext> _logger;
-    private readonly IMessageBus _sender;
+    private readonly ILogger<ProductCatalogDbContext> _logger = logger;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public ProductCatalogDbContext() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    private readonly IMessageBus _sender = sender;
 
-    public ProductCatalogDbContext(DbContextOptions<ProductCatalogDbContext> options, IMessageBus sender,
-        ILogger<ProductCatalogDbContext> logger) : base(options)
-    {
-        _sender = sender;
-        _logger = logger;
-    }
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
