@@ -1,10 +1,22 @@
-# Modular Monolith Template
-
-A production-ready template for building .NET applications using the **Modular Monolith** architecture pattern with Clean Architecture principles.
+# ECommercePlatform
 
 ## Overview
+ECommercePlatform is a REST API service designed to manage products for an e-shop. It provides endpoints to list all products, create new products, retrieve product details, and update product stock. The application is built with .NET Core and follows best practices for REST API design, application architecture, and SOLID principles.
 
-This template provides a solid foundation for building scalable, maintainable applications that can evolve from a monolith to microservices when needed. It combines the simplicity of a monolith with the modularity of microservices.
+## Features
+- **Product Management**:
+  - List all available products.
+  - Create new products with only a name and image URL.
+  - Retrieve details of a single product by ID.
+  - Update the stock quantity of a product.
+- **API Documentation**:
+  - Swagger documentation for all endpoints.
+- **Unit Testing**:
+  - Comprehensive unit tests covering endpoint functionality.
+- **Versioning**:
+  - Version 2 of the API includes pagination support (default page size: 10).
+- **Asynchronous Queue**:
+  - All endpoints use Wolverine for asynchronous processing, ensuring efficient and reliable handling of requests.
 
 ## Architecture
 
@@ -35,7 +47,7 @@ Each module is self-contained with its own:
 ├── ECommercePlatform/                    # Main API host application
 ├── ECommercePlatform.AppHost/            # Aspire orchestration host
 ├── ECommercePlatform.ServiceDefaults/    # Shared service configuration (OpenTelemetry, Health Checks)
-└── ECommercePlatform.Modules/
+├── ECommercePlatform.Modules/
     ├── SharedKernel/             # Common interfaces and abstractions
     └── ProductCatalog/                   # Template module (copy this to create new modules)
         ├── ProductCatalog/               # ProductCatalog entry point and installer
@@ -43,84 +55,62 @@ Each module is self-contained with its own:
         ├── ProductCatalog.Application/   # Application services and use cases
         ├── ProductCatalog.Infrastructure/# Data access and external services
         └── ProductCatalog.Presentation/  # API endpoints
+└── ECommercePlatform.Modules.Tests/      # Unit tests for modules
+    ├── ProductCatalog.Tests/             # Tests for ProductCatalog module
+        ├── ProductCatalog.Application/   # Application layer tests
+        ├── ProductCatalog.Domain/        # Domain layer tests
+        ├── ProductCatalog.Infrastructure/# Infrastructure layer tests
+        └── ProductCatalog.Presentation/  # Presentation layer tests
 ```
 
 ## Getting Started
 
 ### Prerequisites
 - .NET 10.0 SDK
-- Docker (must be running to use Postgres in Aspire)
+- Docker (must be running to use MS SQLServer in Aspire)
 - Your preferred IDE (Visual Studio, VS Code, Rider)
 
-### Quick Start
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kezniklm/Modular-Monolith-Template
-   ```
-
-2. **Build the solution**
-   ```bash
-   dotnet build
-   ```
-
-3. **Run with Aspire (recommended)**
-   ```bash
-   dotnet run --project ECommercePlatform.AppHost
-   ```
-
-4. **Or run standalone**
-   ```bash
-   dotnet run --project ECommercePlatform
-   ```
-
-## Creating a New ProductCatalog
-
-1. Copy the `ECommercePlatform.Modules/ProductCatalog` folder
-2. Rename all `ProductCatalog` references to your new module name
-3. Register the module in `ECommercePlatform/DependencyInjection.cs`:
-   ```csharp
-   var modules = new List<IProductCatalog>
-   {
-       new ProductCatalogInstaller(),
-       new YourNewProductCatalogInstaller() // Add your module here
-   };
-   ```
-4. Add connection string in `appsettings.json`:
-   ```json
-   {
-     "ConnectionStrings": {
-       "YourNewProductCatalogConnectionString": "..."
-     }
-   }
-   ```
-
-## ProductCatalog Interface
-
-Each module implements the `IProductCatalog` interface:
-
-```csharp
-public interface IProductCatalog
-{
-    void InstallDomain(IServiceCollection serviceCollection);
-    void InstallApplication(IServiceCollection serviceCollection);
-    void InstallInfrastructure(IServiceCollection serviceCollection, string connectionString);
-    void InstallPresentation(IServiceCollection serviceCollection);
-}
+### 1. Clone the Repository
+```bash
+git clone https://github.com/kezniklm/ECommercePlatform
+cd ECommercePlatform
 ```
 
-## Configuration
+### 2. Run the Application
+```bash
+dotnet run --project ECommercePlatform.AppHost
+```
+The API will be accessible at `https://localhost:17162/`.
 
-- `appsettings.json` - Application configuration
-- `appsettings.Development.json` - Development-specific settings
-- Connection strings follow the pattern: `{ProductCatalogName}ConnectionString`
+### 4. Access Swagger Documentation
+Open your browser and navigate to `https://localhost:7079/swagger` to view the API documentation.
+
+### 5. Run Unit Tests
+```bash
+dotnet test
+```
+
+## Project Structure
+- **ECommercePlatform**: Main Web API project.
+- **ECommercePlatform.AppHost**: Application host configuration.
+- **ECommercePlatform.Modules**: Modular structure for features like ProductCatalog.
+- **ECommercePlatform.Modules.Tests**: Unit tests for the modules.
+- **ECommercePlatform.ServiceDefaults**: Shared service configurations.
+- **SharedKernel**: Common interfaces and utilities.
+
+## Version 2 Enhancements
+- **Pagination**:
+  - Default page size: 10.
+  - Customizable via query parameters.
+- **Asynchronous Stock Updates**:
+  - Uses an InMemory queue, Kafka, or RabbitMQ for handling stock updates asynchronously.
+
+## Architecture
+The application follows a modular architecture with clear separation of concerns:
+- **Domain Layer**: Core business logic.
+- **Application Layer**: Application-specific logic and use cases.
+- **Infrastructure Layer**: Database and external service integrations.
+- **Presentation Layer**: API controllers and request handling.
 
 ## License
-
 View [LICENSE.txt](LICENSE.txt) for licensing information.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit issues and pull requests.
-
-
