@@ -79,4 +79,27 @@ public sealed class Product : AggregateRoot<ProductId>
 
         return product;
     }
+
+    public Result UpdateStock(int newQuantity)
+    {
+        Result<ProductStockQuantity> stockResult = ProductStockQuantity.Create(newQuantity);
+
+        if (stockResult.IsFailed)
+        {
+            return Result.Fail(stockResult.Errors);
+        }
+
+        var previousQuantity = ProductStockQuantity.Value;
+
+        ProductStockQuantity = stockResult.Value;
+
+        UpdatedAt = DateTime.UtcNow;
+
+        Raise(ProductStockUpdatedEvent.Create(
+            Id.Value,
+            previousQuantity,
+            newQuantity));
+
+        return Result.Ok();
+    }
 }
