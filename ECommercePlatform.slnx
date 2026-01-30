@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/ECommercePlatform.Modules.Tests/" />
+  <Folder Name="/ECommercePlatform.Modules.Tests/ProductCatalog.Tests/">
+    <Project Path="ECommercePlatform.Modules.Tests/ProductCatalog.Tests/ProductCatalog.Application/ProductCatalog.Application.Tests.csproj" />
+    <Project Path="ECommercePlatform.Modules.Tests/ProductCatalog.Tests/ProductCatalog.Domain/ProductCatalog.Domain.Tests.csproj" />
+    <Project Path="ECommercePlatform.Modules.Tests/ProductCatalog.Tests/ProductCatalog.Infrastructure/ProductCatalog.Infrastructure.Tests.csproj" />
+    <Project Path="ECommercePlatform.Modules.Tests/ProductCatalog.Tests/ProductCatalog.Presentation/ProductCatalog.Presentation.Tests.csproj" />
+  </Folder>
+  <Folder Name="/ECommercePlatform.Modules/">
+    <Project Path="ECommercePlatform.Modules/SharedKernel.Generators/SharedKernel.Generators.csproj" />
+    <Project Path="ECommercePlatform.Modules/SharedKernel/SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/ECommercePlatform.Modules/ProductCatalog/">
+    <Project Path="ECommercePlatform.Modules/ProductCatalog/ProductCatalog.Application/ProductCatalog.Application.csproj" Id="e6d4dd06-ee86-4ba2-b596-9ffe62145be6" />
+    <Project Path="ECommercePlatform.Modules/ProductCatalog/ProductCatalog.Domain/ProductCatalog.Domain.csproj" Id="75c26440-2893-4520-b248-f4ac2ff471a3" />
+    <Project Path="ECommercePlatform.Modules/ProductCatalog/ProductCatalog.Infrastructure/ProductCatalog.Infrastructure.csproj" Id="e5ae3875-bb19-4e6c-987e-b94204791439" />
+    <Project Path="ECommercePlatform.Modules/ProductCatalog/ProductCatalog.Presentation/ProductCatalog.Presentation.csproj" Id="2dd048d7-33d1-42fb-aa4f-3544ca64f003" />
+    <Project Path="ECommercePlatform.Modules/ProductCatalog/ProductCatalog/ProductCatalog.csproj" />
+  </Folder>
+  <Project Path="ECommercePlatform.AppHost/ECommercePlatform.AppHost.csproj" />
+  <Project Path="ECommercePlatform.ServiceDefaults/ECommercePlatform.ServiceDefaults.csproj" />
+  <Project Path="ECommercePlatform/ECommercePlatform.csproj" />
+</Solution>
+
+
