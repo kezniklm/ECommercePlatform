@@ -11,9 +11,10 @@ namespace ECommercePlatform;
 public static class DependencyInjection
 {
     private static readonly IReadOnlyList<ModuleDescriptor> ModuleDescriptors =
-    [
-        new(new ProductCatalogInstaller(), new SwaggerModule("ProductCatalog", "ProductCatalog API", "v1"))
-    ];
+        [
+            new(new ProductCatalogInstaller(), new SwaggerModule("ProductsV1", "ProductCatalog API", "v1")),
+            new(new ProductCatalogInstaller(), new SwaggerModule("ProductsV2", "ProductCatalog API", "v2"))
+        ];
 
     public static IHostApplicationBuilder AddModules(this IHostApplicationBuilder hostApplicationBuilder)
     {
@@ -61,7 +62,7 @@ public static class DependencyInjection
                     .SelectMany(tagsAttribute => tagsAttribute.Tags)
                     .ToList();
 
-                return tags.Any(tag => tag.StartsWith(documentName, StringComparison.OrdinalIgnoreCase));
+                return tags.Any(tag => tag.Equals(documentName, StringComparison.OrdinalIgnoreCase));
             });
         });
 
