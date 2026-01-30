@@ -4,7 +4,7 @@ using SharedKernel;
 using Wolverine;
 using Wolverine.FluentValidation;
 using Wolverine.Http;
-using Wolverine.Postgresql;
+using Wolverine.SqlServer;
 
 namespace ECommercePlatform;
 
@@ -79,7 +79,7 @@ public static class DependencyInjection
 
             foreach (var moduleRegistration in moduleRegistrations)
             {
-                options.PersistMessagesWithPostgresql(
+                options.PersistMessagesWithSqlServer(
                     moduleRegistration.ConnectionString,
                     GetWolverineSchemaName(moduleRegistration.ModuleName));
             }

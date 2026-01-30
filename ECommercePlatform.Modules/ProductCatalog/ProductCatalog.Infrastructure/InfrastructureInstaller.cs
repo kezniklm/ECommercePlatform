@@ -16,7 +16,7 @@ public static class InfrastructureInstaller
 
         RegisterRepositories(serviceCollection);
 
-        serviceCollection.AddDbContext<ProductCatalogDbContext>(options => options.UseNpgsql(moduleConnectionString));
+        serviceCollection.AddDbContext<ProductCatalogDbContext>(options => options.UseSqlServer(moduleConnectionString));
 
         return serviceCollection;
     }

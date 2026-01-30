@@ -2,14 +2,15 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-IResourceBuilder<PostgresServerResource> postgres =
-    builder.AddPostgres(nameof(ECommercePlatform) + "Postgres").WithDataVolume();
+IResourceBuilder<SqlServerServerResource> sqlServer = builder
+    .AddSqlServer(nameof(ECommercePlatform) + "SqlServer")
+    .WithDataVolume();
 
-IResourceBuilder<PostgresDatabaseResource> productCatalogDb = postgres.AddDatabase("ProductCatalogDb");
+IResourceBuilder<SqlServerDatabaseResource> productCatalogDb = sqlServer.AddDatabase("ProductCatalogDb");
 
 builder.AddProject<ECommercePlatform>(nameof(ECommercePlatform))
     .WithUrl("/swagger")
     .WithReference(productCatalogDb, "ProductCatalogConnectionString")
-    .WaitFor(postgres);
+    .WaitFor(sqlServer);
 
 builder.Build().Run();

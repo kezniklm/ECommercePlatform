@@ -9,7 +9,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 		<PackageReference Include="Swashbuckle.AspNetCore" />
-		<PackageReference Include="WolverineFx.Postgresql" />
+		<PackageReference Include="WolverineFx.SqlServer" />
 	</ItemGroup>
 
 	<ItemGroup>
