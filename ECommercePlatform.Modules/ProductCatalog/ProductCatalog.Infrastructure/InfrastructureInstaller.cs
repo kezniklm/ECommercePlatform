@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProductCatalog.Application.Services;
+using ProductCatalog.Domain.Product;
 using ProductCatalog.Infrastructure.Persistence;
+using ProductCatalog.Infrastructure.Persistence.Seeders;
+using ProductCatalog.Infrastructure.Persistence.Seeders.Fakers;
 using Wolverine.Attributes;
 
 [assembly: WolverineModule]
@@ -16,7 +19,11 @@ public static class InfrastructureInstaller
 
         RegisterRepositories(serviceCollection);
 
+        RegisterSeeders(serviceCollection);
+
         serviceCollection.AddDbContext<ProductCatalogDbContext>(options => options.UseSqlServer(moduleConnectionString));
+
+        serviceCollection.AddScoped<IDataSeeder<Product>, ProductDataSeeder>();
 
         return serviceCollection;
     }
@@ -34,4 +41,19 @@ public static class InfrastructureInstaller
             .AddClasses(filter => filter.AssignableTo(typeof(IRepository<>)), false)
             .AsImplementedInterfaces()
             .WithTransientLifetime());
+
+    private static void RegisterSeeders(IServiceCollection serviceCollection)
+    {
+        serviceCollection.Scan(scan => scan
+            .FromAssemblies(typeof(InfrastructureInstaller).Assembly)
+            .AddClasses(filter => filter.AssignableTo(typeof(IDataSeeder<>)), false)
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+        serviceCollection.Scan(scan => scan
+            .FromAssemblies(typeof(InfrastructureInstaller).Assembly)
+            .AddClasses(filter => filter.AssignableTo(typeof(IFaker<>)), false)
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+    }
 }
