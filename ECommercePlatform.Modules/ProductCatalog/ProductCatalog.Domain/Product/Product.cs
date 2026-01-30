@@ -102,4 +102,68 @@ public sealed class Product : AggregateRoot<ProductId>
 
         return Result.Ok();
     }
+
+    public Result UpdateName(string name)
+    {
+        Result<ProductName> nameResult = ProductName.Create(name);
+
+        if (nameResult.IsFailed)
+        {
+            return Result.Fail(nameResult.Errors);
+        }
+
+        Name = nameResult.Value;
+
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Ok();
+    }
+
+    public Result UpdateImageUrl(Uri imageUrl)
+    {
+        Result<ProductImageUrl> imageUrlResult = ProductImageUrl.Create(imageUrl);
+
+        if (imageUrlResult.IsFailed)
+        {
+            return Result.Fail(imageUrlResult.Errors);
+        }
+
+        ProductImageUrl = imageUrlResult.Value;
+
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Ok();
+    }
+
+    public Result UpdatePrice(decimal price)
+    {
+        Result<ProductPrice> priceResult = ProductPrice.Create(price);
+
+        if (priceResult.IsFailed)
+        {
+            return Result.Fail(priceResult.Errors);
+        }
+
+        Price = priceResult.Value;
+
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Ok();
+    }
+
+    public Result UpdateDescription(string? description)
+    {
+        Result<ProductDescription> descriptionResult = ProductDescription.Create(description);
+
+        if (descriptionResult.IsFailed)
+        {
+            return Result.Fail(descriptionResult.Errors);
+        }
+
+        ProductDescription = descriptionResult.Value;
+
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Ok();
+    }
 }
