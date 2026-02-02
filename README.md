@@ -90,27 +90,5 @@ Open your browser and navigate to `https://localhost:7079/swagger` to view the A
 dotnet test
 ```
 
-## Project Structure
-- **ECommercePlatform**: Main Web API project.
-- **ECommercePlatform.AppHost**: Application host configuration.
-- **ECommercePlatform.Modules**: Modular structure for features like ProductCatalog.
-- **ECommercePlatform.Modules.Tests**: Unit tests for the modules.
-- **ECommercePlatform.ServiceDefaults**: Shared service configurations.
-- **SharedKernel**: Common interfaces and utilities.
-
-## Version 2 Enhancements
-- **Pagination**:
-  - Default page size: 10.
-  - Customizable via query parameters.
-- **Asynchronous Stock Updates**:
-  - Uses an InMemory queue, Kafka, or RabbitMQ for handling stock updates asynchronously.
-
-## Architecture
-The application follows a modular architecture with clear separation of concerns:
-- **Domain Layer**: Core business logic.
-- **Application Layer**: Application-specific logic and use cases.
-- **Infrastructure Layer**: Database and external service integrations.
-- **Presentation Layer**: API controllers and request handling.
-
 ## License
 View [LICENSE.txt](LICENSE.txt) for licensing information.
